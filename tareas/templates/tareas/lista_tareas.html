@@ -1,0 +1,40 @@
+{% extends 'tareas/base.html' %}
+
+{% block title %}Mis Tareas - Gestor de Tareas{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>📋 Mis Tareas</h2>
+            <a href="{% url 'tareas:crear' %}" class="btn btn-primary">                ➕ Nueva Tarea
+            </a>
+        </div>
+
+        {% if tareas %}
+            <div class="row">
+                {% for tarea in tareas %}
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ tarea.titulo }}</h5>
+                            <p class="card-text">{{ tarea.descripcion }}</p>
+                            <div class="d-flex justify-content-between">
+                                <a href="{% url 'tareas:detalle' tarea.id %}" class="btn btn-sm btn-info">Ver detalles</a>
+                                <a href="{% url 'tareas:eliminar' tarea.id %}" class="btn btn-sm btn-danger" 
+                                   onclick="return confirm('¿Estás seguro de eliminar esta tarea?')">🗑️ Eliminar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-info" role="alert">
+                <h4 class="alert-heading">¡No tienes tareas aún!</h4>
+                <p>Comienza agregando tu primera tarea haciendo clic en el botón "Nueva Tarea".</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
